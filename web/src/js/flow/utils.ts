@@ -77,6 +77,10 @@ export class MessageUtils {
 
 export class RequestUtils extends MessageUtils {
     static pretty_url(request: HTTPRequest): string {
+        if(request.path?.startsWith('/wras.proxy?url=')){
+            const url = request.path.substring(16);
+            return decodeURIComponent(url);
+        }
         let port = "";
         if (defaultPorts[request.scheme] !== request.port) {
             port = ":" + request.port;
